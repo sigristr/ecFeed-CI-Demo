@@ -5,7 +5,7 @@ Scenario: Basic test of ecFeed
   When ecFeed homepage is opened
   And button is Accepted
   And Login button is clicked
-  And username "sigrid.strand@testify.no" and password "Persimon123!" are entered
+  And username "ecFeed.automation@gmail.com" and password "#password123!" are entered
   And Submit button is clicked
   And Accept cookies button
 
