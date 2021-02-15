@@ -3,11 +3,29 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      java: corretto11
+      python: 3.8
   pre_build:
     commands:
-      - echo Nothing to do in the pre_build phase...
+      - apt-get install -y python3-venv
+      - python3.6 -m venv test_venv
+      - . test_venv/bin/activate
+      - pip install --upgrade pip
+      - pip install .
+      - pip install -r tests/requirements.txt
+      - rm -rf dspt
+      - mkdir test-reports
   build:
+    commands:
+      - pytest 
+        --html=test-reports/report.html 
+        --self-contained-html
+        -s
+        -v
+        --cov=dspt 
+        --cov-report=html:test-reports/coverage 
+        --junitxml=test-reports/junit.xml 
+        --log-file=test-reports/logs.txt 
+        tests
     commands:
       - echo Build started on `date`
       - mvn install
