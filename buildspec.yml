@@ -2,28 +2,23 @@ version: 0.2
 
 phases:
   install:
+    #If you use the Ubuntu standard image 2.0 or later, you must specify runtime-versions.
+    #If you specify runtime-versions and use an image other than Ubuntu standard image 2.0, the build fails.
     runtime-versions:
-      python: 3.8
+       python: 3.7
+    #commands:
+      # - There are no build commands
   pre_build:
     commands:
-      - pip install --upgrade pip
-      - pip install .
       - pip install -r requirements.txt
+      - pip install -e .
   build:
     commands:
-      - pytest 
-        --html=test-reports/report.html 
-        --self-contained-html
-        -s
-        -v
-        --cov=dspt 
-        --cov-report=html:test-reports/coverage 
-        --junitxml=test-reports/junit.xml 
-        --log-file=test-reports/logs.txt 
-        tests
+      - pytest tests/unit/
+      - pytest tests/integration/ -rfs
   post_build:
     commands:
-      - echo Build completed on `date`
+      - python setup.py sdist bdist_wheel
 artifacts:
   files:
     - target/messageUtil-1.0.jar
