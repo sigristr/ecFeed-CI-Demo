@@ -26,9 +26,6 @@ phases:
         --junitxml=test-reports/junit.xml 
         --log-file=test-reports/logs.txt 
         tests
-    commands:
-      - echo Build started on `date`
-      - mvn install
   post_build:
     commands:
       - echo Build completed on `date`
